@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="style.css" rel="stylesheet">
+<title>
+Eagle Eye monitoring system
+</title>
+<script>
+
+
+var Relay1_state = 0;
+var Relay2_state = 0;
+var Relay3_state = 0;
+var Relay4_state = 0;
+var Relay5_state = 0;
+var Relay6_state = 0;
+
+strRelay1 = "";
+strRelay2 = "";
+strRelay3 = "";
+strRelay4 = "";
+strRelay5 = "";
+strRelay6 = "";
+
+
+
+
+clicked1 = true;
+function myFunction1() { 
+
+if(clicked1){
+    document.getElementById("isolator1").style.backgroundColor = "red";
+	clicked1 = false;
+	}else{
+    document.getElementById("isolator1").style.backgroundColor = "limegreen";
+	clicked1 = true;
+}
+}
+clicked2 = true;
+function myFunction2() { 
+
+if(clicked2){
+    document.getElementById("isolator2").style.backgroundColor = "red";
+	clicked2 = false;
+	}else{
+    document.getElementById("isolator2").style.backgroundColor = "limegreen";
+	clicked2 = true;
+}
+}
+clicked3 = true;
+function myFunction3() { 
+
+if(clicked3){
+    document.getElementById("isolator3").style.backgroundColor = "red";
+	clicked3 = false;
+	}else{
+    document.getElementById("isolator3").style.backgroundColor = "limegreen";
+	clicked3 = true;
+}
+}
+clicked4 = true;
+function myFunction4() { 
+
+if(clicked4){
+    document.getElementById("isolator4").style.backgroundColor = "red";
+	clicked4 = false;
+	}else{
+    document.getElementById("isolator4").style.backgroundColor = "limegreen";
+	clicked4 = true;
+}
+}
+
+
+pressed1 = true;
+function breaker1() { 
+
+if(pressed1){
+    document.getElementById("CB1").style.backgroundColor = "red";
+	pressed1 = false;
+	}else{
+    document.getElementById("CB1").style.backgroundColor = "limegreen";
+	pressed1 = true;
+}
+}
+pressed2 = true;
+function breaker2() { 
+
+if(pressed2){
+    document.getElementById("CB2").style.backgroundColor = "red";
+	pressed2 = false;
+	}else{
+    document.getElementById("CB2").style.backgroundColor = "limegreen";
+	pressed2 = true;
+}
+}
+pressed3 = true;
+function breaker3() { 
+
+if(pressed3){
+    document.getElementById("CB3").style.backgroundColor = "red";
+	pressed3 = false;
+	}else{
+    document.getElementById("CB3").style.backgroundColor = "limegreen";
+	pressed3 = true;
+}
+}
+pressed4 = true;
+function breaker4() { 
+
+if(pressed4){
+    document.getElementById("CB4").style.backgroundColor = "red";
+	pressed4 = false;
+	}else{
+    document.getElementById("CB4").style.backgroundColor = "limegreen";
+	pressed4 = true;
+}
+}
+pressed5 = true;
+function breaker5() { 
+
+if(pressed5){
+    document.getElementById("CB5").style.backgroundColor = "red";
+	pressed5 = false;
+	}else{
+    document.getElementById("CB5").style.backgroundColor = "limegreen";
+	pressed5 = true;
+}
+}
+
+pressed6 = true;
+function breaker6() { 
+
+if(pressed6){
+    document.getElementById("CB6").style.backgroundColor = "red";
+	pressed6 = false;
+	}else{
+    document.getElementById("CB6").style.backgroundColor = "limegreen";
+	pressed6 = true;
+}
+}
+
+
+function GetArduinoIO()
+		{
+			nocache = "&nocache=" + Math.random() * 1000000;
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function()
+			{
+				if (this.readyState == 4) {
+					if (this.status == 200) {
+						if (this.responseXML != null) {
+							// XML file received - contains analog values, switch values and LED states
+							var count;
+				
+							//Relay1 
+							if (this.responseXML.getElementsByTagName('CB')[0].childNodes[0].nodeValue === "on") {
+								document.getElementById("CB1").style.backgroundColor = "red";
+								Relay1_state = 1;
+							}
+							else {
+								document.getElementById("CB1").style.backgroundColor = "limegreen";
+								Relay1_state = 0;
+							}
+							
+							
+							//Relay2
+							if (this.responseXML.getElementsByTagName('CB')[1].childNodes[0].nodeValue === "on") {
+								document.getElementById("CB2").style.backgroundColor = "red";
+								Relay2_state = 1;
+							}
+							else {
+								document.getElementById("CB2").style.backgroundColor = "limegreen";
+								Relay2_state = 0;
+							}
+							
+							//Relay3
+							if (this.responseXML.getElementsByTagName('CB')[2].childNodes[0].nodeValue === "on") {
+								document.getElementById("CB3").style.backgroundColor = "red";
+								Relay3_state = 1;
+							}
+							else {
+								document.getElementById("CB3").style.backgroundColor = "limegreen";
+								Relay3_state = 0;
+							}
+							
+							//Relay4 
+							if (this.responseXML.getElementsByTagName('CB')[3].childNodes[0].nodeValue === "on") {
+								document.getElementById("CB4").style.backgroundColor = "red";
+								Relay4_state = 1;
+							}
+							else {
+								document.getElementById("CB4").style.backgroundColor = "limegreen";
+								Relay4_state = 0;
+							}
+							
+							//Relay5 
+							if (this.responseXML.getElementsByTagName('CB')[4].childNodes[0].nodeValue === "on") {
+								document.getElementById("CB5").style.backgroundColor = "red";
+								Relay5_state = 1;
+							}
+							else {
+								document.getElementById("CB5").style.backgroundColor = "limegreen";
+								Relay5_state = 0;
+							}
+							
+							//Relay6 
+							if (this.responseXML.getElementsByTagName('CB')[5].childNodes[0].nodeValue === "on") {
+								document.getElementById("CB6").style.backgroundColor = "red";
+								Relay6_state = 1;
+							}
+							else {
+								document.getElementById("CB6").style.backgroundColor = "limegreen";
+								Relay6_state = 0;
+							}
+						}
+					}
+				}
+			}
+			// send HTTP GET request with Relays to switch on/off if any
+			request.open("GET", "ajax_inputs" + strRelay1 + strRelay2 + strRelay3 + strRelay4 + strRelay5 + strRelay6 + nocache, true);
+			request.send(null);
+			setTimeout('GetArduinoIO()', 1000);
+			
+			strRelay1 = "";
+            strRelay2 = "";
+            strRelay3 = "";
+            strRelay4 = "";
+            strRelay5 = "";
+            strRelay6 = "";
+
+		}
+
+        function GetButton1()
+		{
+			if (Relay1_state == 1) {
+				Relay1_state = 0;
+				strRelay1 = "&Relay1=0";
+			}
+			else {
+				Relay1_state = 1;
+				strRelay1 = "&Relay=1";
+			}
+		}
+		
+		
+		
+		
+		function GetButton2()
+		{
+			if (Relay2_state == 1) {
+				Relay2_state = 0;
+				strRelay2 = "&Relay2=0";
+			}
+			else {
+				Relay2_state = 1;
+				strRelay2 = "&Relay2=1";
+			}
+		}
+		
+		function GetButton3()
+		{
+			if (Relay3_state == 1) {
+				Relay3_state = 0;
+				strRelay3 = "&Relay3=0";
+			}
+			else {
+				Relay3_state = 1;
+				strRelay3 = "&Relay3=1";
+			}
+		}
+		
+		function GetButton4()
+		{
+			if (Relay4_state == 1) {
+				Relay4_state = 0;
+				strRelay4 = "&Relay4=0";
+			}
+			else {
+				Relay4_state = 1;
+				strRelay4 = "&Relay4=1";
+			}
+		}
+		
+		function GetButton5()
+		{
+			if (Relay5_state == 1) {
+				Relay5_state = 0;
+				strRelay5 = "&Relay5=0";
+			}
+			else {
+				Relay5_state = 1;
+				strRelay5 = "&Relay5=1";
+			}
+		}
+ 
+ function GetButton6()
+		{
+			if (Relay6_state == 1) {
+				Relay6_state = 0;
+				strRelay6 = "&Relay6=0";
+			}
+			else {
+				Relay6_state = 1;
+				strRelay6 = "&Relay6=1";
+			}
+		}
+		
+
+
+
+
+</script>
+
+
+</head>
+<body onload="GetArduinoIO()">
+
+<div><h1 class="heading">Eagle Eye</h1></div>
+
+<div id="container1">
+
+<button class="generator">GEN</button>
+<button class="line3"></button>
+<button id="isolator1" onclick="myFunction1()"></button>
+<button class="line1"></button>
+<button id="CB1" onclick="breaker1() GetButton1()"></button>
+<button class="line1"></button>
+<button class="transformer">TX1</button>
+<button class="line1"></button>
+<button id="CB2" onclick="breaker2() GetButton2()"></button>
+<button class="line1"></button>
+<button id="isolator2" onclick="myFunction2()"></button>
+<button class="line2"></button>
+
+<button id="isolator3" onclick="myFunction3()"></button>
+<button class="line1"></button>
+<button id="CB3" onclick="breaker3() GetButton3()"></button>
+<button class="line1"></button>
+<button class="transformer">TX2</button>
+<button class="line1"></button>
+<button id="CB4" onclick="breaker4() GetButton4()"></button>
+<button class="line1"></button>
+<button id="isolator4" onclick="myFunction4()"></button>
+<button class="line4"></button>
+<button class="busbar" onclick="myFunction5()"></button>
+
+</div>
+
+<div id="container2">
+<div>
+<button class="line1"></button>
+<button id="CB5" onclick="breaker5() GetButton5()"></button>
+<button class="line4"></button>
+<button class="load">LOAD1</button>
+</div>
+<div id="middle"></div>
+<div>
+<button class="line1"></button>
+<button id="CB6" onclick="breaker6() GetButton6()"></button>
+<button class="line4"></button>
+<button class="load">LOAD2</button>
+</div>
+</div>
+
+
+</body>
+
+
+</html>
