@@ -10,7 +10,7 @@ const styles = {
     root: {
         position: 'relative',
         display: 'flex',
-        width: '100%',
+        width: '100%', /*this makes disables horizontal scroll,*/
         height: '100%',
         zIndex: 1,
     }
