@@ -18,24 +18,34 @@ class TableComponent extends Component {
     constructor(props){
         super(props);
 
-        this.createData = this.createData.bind(this);
+        this.mockData = this.mockData.bind(this);
         this.getData = this.getData.bind(this);
 
     }
 
-    createData(action, time) {
+    mockData(action, value) {
         let id = 0;
         id += 1;
-        return { id, action, time };
+        return {
+            id: id,
+            action: "action",
+            v1: "line 1 voltage",
+            v2: "line 2 voltage",
+            v3: "line 3 voltage",
+            c1: "line 1 current",
+            c2: "line 2 current",
+            c3: "line 3 current",
+            time: "Time"
+        };
     }
 
     getData(){
         return [
-            this.createData('Relay 1 off', "10:00 PM"),
-            this.createData('Action 2', "10:00 PM"),
-            this.createData('Action 3', "10:00 PM"),
-            this.createData('Action 4', "10:00 PM"),
-            this.createData('Action 5', "10:00 PM"),
+            this.mockData(),
+            this.mockData(),
+            this.mockData(),
+            this.mockData(),
+            this.mockData(),
         ];
     }
 
@@ -43,24 +53,43 @@ class TableComponent extends Component {
         return (
             <div>
                 <Paper elevation={5} style={styles.paper}>
-                    <Table style={styles.table}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Action</TableCell>
-                                <TableCell numeric>Time</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.getData().map(n => {
-                                return (
-                                    <TableRow key={n.id}>
-                                        <TableCell>{n.action}</TableCell>
-                                        <TableCell numeric>{n.time}</TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
+                    <table style={Object.assign({}, styles.table, styles.th)}>
+                        <tr>
+                            <th>Company</th>
+                            <th>Contact</th>
+                            <th>Country</th>
+                        </tr>
+                        <tr>
+                            <td>Alfreds Futterkiste</td>
+                            <td>Maria Anders</td>
+                            <td>Germany</td>
+                        </tr>
+                        <tr>
+                            <td>Centro comercial Moctezuma</td>
+                            <td>Francisco Chang</td>
+                            <td>Mexico</td>
+                        </tr>
+                        <tr>
+                            <td>Ernst Handel</td>
+                            <td>Roland Mendel</td>
+                            <td>Austria</td>
+                        </tr>
+                        <tr>
+                            <td>Island Trading</td>
+                            <td>Helen Bennett</td>
+                            <td>UK</td>
+                        </tr>
+                        <tr>
+                            <td>Laughing Bacchus Winecellars</td>
+                            <td>Yoshi Tannamuri</td>
+                            <td>Canada</td>
+                        </tr>
+                        <tr>
+                            <td>Magazzini Alimentari Riuniti</td>
+                            <td>Giovanni Rovelli</td>
+                            <td>Italy</td>
+                        </tr>
+                    </table>
                 </Paper>
             </div>
         );

@@ -7,8 +7,8 @@ const server  = require('./server');
 
 exports.receiveData = functions.https.onRequest((request, response) => {
     return server.receiveData(request.body).then((result)=>{
-        common.logObject('index.js', 'Received data', request);
-        common.logObject('index.js', 'Received result', result);
+        common.logObject('index.js', 'Receive data', request);
+        common.logObject('index.js', 'Receive result', result);
         return response.send(result);
     }).catch((error) => {
         common.logObject('index.js', 'Receive error', error);
