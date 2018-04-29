@@ -1,9 +1,345 @@
-import React from 'react';
+/**
+ * Created by Mungujakisa on 4/23/2018.
+ */
+import React, {Component} from 'react';
+import Paper from 'material-ui/Paper';
+import Button from 'material-ui/Button';
+import Fade from 'material-ui/transitions/Fade';
+import { CircularProgress } from 'material-ui/Progress';
+import * as API from "../utilities/API";
 
-export default function Circuit(props) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="1285px" height="145px"
-             version="1.1" {...props}>
+const WAIT = 5000;
+
+const styles = {
+    paper: {
+        minWidth: 500,
+    },
+    inner: {
+        width: 'fit-content',
+        height: 'fit-content',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    },
+    buttons: {
+        width: '600px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    },
+    button: {
+        margin: 5
+    },
+    placeholder: {
+        height: 40,
+        width: 100,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    },
+};
+
+const prehash = "";
+const uhash = "";
+
+
+
+const lines = {
+    line_1: {
+        id: "cell-36" + prehash + uhash
+    },
+    line_2: {
+        id: "cell-37" + prehash + uhash
+    },
+    line_3: {
+        id: "cell-38" + prehash + uhash
+    },
+    line_4: {
+        id: "cell-39" + prehash + uhash
+    },
+    line_5: {
+        id: "cell-40" + prehash + uhash
+    },
+    line_6: {
+        id: "cell-41" + prehash + uhash
+    },
+    line_7: {
+        id: "cell-42" + prehash + uhash
+    },
+    line_8: {
+        id: "cell-43" + prehash + uhash
+    },
+    line_9: {
+        id: "cell-45" + prehash + uhash
+    },
+    line_10: {
+        id: "cell-44" + prehash + uhash
+    },
+    line_11: {
+        id: "cell-46" + prehash + uhash
+    }
+};
+
+class CircuitGrid extends Component {
+
+    devices = {
+        source: {
+            id: "cell-3" + prehash + uhash,
+        },
+        relay_1: {
+            id: "cell-4" + prehash + uhash
+        },
+        transformer_1: {
+            id: "cell-5" + prehash + uhash
+        },
+        relay_2: {
+            id: "cell-6" + prehash + uhash
+        },
+        relay_3: {
+            id: "cell-8" + prehash + uhash
+        },
+        transformer_2: {
+            id: "cell-9" + prehash + uhash
+        },
+        relay_4: {
+            id: "cell-10" + prehash + uhash
+        },
+        relay_5: {
+            id: "cell-13" + prehash + uhash
+        },
+        relay_6: {
+            id: "cell-12" + prehash + uhash
+        },
+        load_1: {
+            id: "cell-14" + prehash + uhash
+        },
+        load_2: {
+            id: "cell-15" + prehash + uhash
+        }
+    };
+
+    constructor(props){
+        super(props);
+        this.state = {
+            loading: false,
+            device_states: {
+                source: 'red',
+                relay_1: 'red',
+                transformer_1: 'red',
+                relay_2: "red",
+                relay_3: 'red',
+                transformer_2: 'red',
+                relay_4: 'red',
+                relay_5: 'red',
+                relay_6: 'red',
+                load_1: 'red',
+                load_2: 'red'
+            }
+        };
+
+        this.attachListeners = this.attachListeners.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    flipColor = (color)=>{
+        if(color === 'red'){
+            return 'green';
+        }
+        return 'red';
+    };
+
+    handleClick(e, data){
+        console.log("click");
+        console.log("data",data);
+
+        console.log('relay_1 state below');
+        console.log(this.state.device_states.relay_1.state);
+
+        let device_states = this.state.device_states;
+
+        switch (data){
+            case this.devices.relay_1.id:
+                device_states.relay_1 = this.flipColor(this.state.device_states.relay_1);
+                this.setState({device_states});
+                break;
+        }
+
+        this.setState({
+            loading: !this.state.loading,
+        });
+
+        API.updateData('development', 'dashboard-states', this.state.device_states);
+        // this.updateRelays();
+        setTimeout(()=>{
+            console.log("5 seconds elapsed");
+            this.setState({
+                loading: !this.state.loading,
+            });
+            API.readData('development', 'hardware-states').then((result)=>{
+                console.log('Result below');
+                console.log(result);
+                let device_states = this.formatStates(result);
+                this.setState({device_states});
+                //this.updateRelays();
+            }).catch((error)=>{
+                console.log('Error below');
+                console.log(error);
+            })
+        }, WAIT);
+
+    }
+
+    componentDidMount(){
+        //this.firstLoad();
+    }
+
+    render() {
+        return (
+            <div>
+                <Paper elevation={5} style={styles.paper}>
+                    <div>
+                        <div style={styles.inner}>
+                            {this.getSVG()}
+                        </div>
+
+                        <div style={styles.buttons}>
+                            <div>
+                                <div style={styles.placeholder}>
+                                    <Fade
+                                        in={this.state.loading}
+                                        style={{
+                                            transitionDelay: this.state.loading ? '800ms' : '0ms',
+                                        }}
+                                        unmountOnExit
+                                    >
+                                        <CircularProgress />
+                                    </Fade>
+                                </div>
+                            </div>
+
+
+                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_1.id))}
+                                    variant="raised" color="primary" style={styles.button}>
+                                Relay 1
+                            </Button>
+                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_2.id))}
+                                variant="raised" color="primary" style={styles.button}>
+                                Relay 2
+                            </Button>
+                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_3.id))}
+                                    variant="raised" color="primary" style={styles.button}>
+                                Relay 3
+                            </Button>
+                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_4.id))}
+                                    variant="raised" color="primary" style={styles.button}>
+                                Relay 4
+                            </Button>
+                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_5.id))}
+                                    variant="raised" color="primary" style={styles.button}>
+                                Relay 5
+                            </Button>
+                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_6.id))}
+                                    variant="raised" color="primary" style={styles.button}>
+                                Relay 6
+                            </Button>
+                        </div>
+                    </div>
+                </Paper>
+            </div>
+        );
+    }
+
+    attachListeners(){
+        console.log("Attaching listeners");
+        let svg = document.getElementById("alphasvg");
+
+        svg.addEventListener("load",()=>{
+
+            console.log("Svg loaded");
+
+            // get the inner DOM of alpha.svg
+            let svgDoc = svg.contentDocument;
+
+            // get device_states
+            this.devices.relay_1.object = svgDoc.getElementById(this.devices.relay_1.id);
+            this.devices.relay_2.object = svgDoc.getElementById(this.devices.relay_2.id);
+            this.devices.relay_3.object = svgDoc.getElementById(this.devices.relay_3.id);
+            this.devices.relay_4.object = svgDoc.getElementById(this.devices.relay_4.id);
+            this.devices.relay_5.object = svgDoc.getElementById(this.devices.relay_5.id);
+            this.devices.relay_6.object = svgDoc.getElementById(this.devices.relay_6.id);
+
+            // get lines
+            lines.line_1.object = svgDoc.getElementById(lines.line_1.id);
+
+            this.updateRelays();
+
+            // this.firstLoad();
+
+        }, false);
+    };
+
+    firstLoad = ()=>{
+        this.setState({
+            loading: !this.state.loading,
+        });
+        setTimeout(()=>{
+            console.log('5 Seconds after load');
+            API.readData('development', 'hardware-states').then((result)=>{
+                this.setState({
+                    loading: !this.state.loading,
+                });
+                let device_states = this.formatStates(result);
+                this.setState({device_states});
+                //this.updateRelays();
+            }).catch((error)=>{
+                console.log('Error below');
+                console.log(error);
+                this.setState({
+                    loading: !this.state.loading,
+                });
+            })
+        }, WAIT);
+    };
+
+    formatStates = (raw)=>{
+        console.log('Raw results below');
+        console.log(raw);
+        return raw;
+    };
+
+    updateRelays =()=>{
+        console.log('Assigning objects');
+
+        let svg = document.getElementById("alphasvg");
+
+        let svgDoc = svg.contentDocument;
+        // get device_states
+        let relay_1 = svgDoc.getElementById(this.devices.relay_1.id);
+        let relay_2 = svgDoc.getElementById(this.devices.relay_2.id);
+        let relay_3 = svgDoc.getElementById(this.devices.relay_3.id);
+        let relay_4 = svgDoc.getElementById(this.devices.relay_4.id);
+        let relay_5 = svgDoc.getElementById(this.devices.relay_5.id);
+        let relay_6 = svgDoc.getElementById(this.devices.relay_6.id);
+
+        console.log('Updating relays');
+        console.log('svg', svg);
+        console.log('svg doc', svgDoc);
+        console.log('relay_1', relay_1);
+        console.log('relay_1 state below');
+        console.log(this.state.device_states.relay_1.state);
+
+        this.changeColor(relay_1, this.state.device_states.relay_1.state);
+        this.changeColor(relay_2, this.state.device_states.relay_2.state);
+        this.changeColor(relay_3, this.state.device_states.relay_3.state);
+        this.changeColor(relay_4, this.state.device_states.relay_4.state);
+        this.changeColor(relay_5, this.state.device_states.relay_5.state);
+        this.changeColor(relay_6, this.state.device_states.relay_6.state);
+    };
+
+    updateLines = ()=>{
+        this.changeText(lines.line_1.object, 'Off');
+    };
+
+    getSVG = () => {
+        return <svg id="svg-element" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="1285px" height="145px"
+             version="1.1">
             <defs/>
             <g transform="translate(0.5,0.5)">
                 <g id="cell-3" content="<object label=&quot;&quot; placeholders=&quot;1&quot;/>
@@ -12,12 +348,12 @@ export default function Circuit(props) {
                 </g>
                 <g id="cell-4" content="<object label=&quot;&quot;/>
       ">
-                    <rect x="170.4" y="58.4" width={24} height={24} fill="#ffffff" stroke="#000000"
+                    <rect x="170.4" y="58.4" width={24} height={24} fill={this.state.device_states.relay_1} stroke="#000000"
                           pointerEvents="none"/>
                 </g>
                 <g id="cell-5" content="<object label=&quot;&quot; placeholders=&quot;1&quot;/>
     ">
-                    <ellipse cx={290} cy={70} rx={48} ry={32} fill="#ffffff" stroke="#000000" pointerEvents="none"/>
+                    <ellipse cx={290} cy={70} rx={48} ry={32} fill={this.state.device_states.relay_2} stroke="#000000" pointerEvents="none"/>
                 </g>
                 <g id="cell-6" content="<object label=&quot;&quot; placeholders=&quot;1&quot;/>
     ">
@@ -845,5 +1181,61 @@ export default function Circuit(props) {
                 </g>
             </g>
         </svg>
-    );
+    };
+
+    getSVGObject = () => {
+        return <object data="mini-grid-draw-io-2.svg" type="image/svg+xml"
+                       id="alphasvg" width="100%">
+        </object>
+    };
+
+    changeColor = (element, state)=>{
+        if (state){
+            let current_color = this.getCurrentColor(element);
+            let old_html = element.innerHTML;
+            let new_html = old_html.replace(current_color, 'green');
+            element.innerHTML = new_html;
+        } else {
+            let current_color = this.getCurrentColor(element);
+            let old_html = element.innerHTML;
+            let new_html = old_html.replace(current_color, 'red');
+            element.innerHTML = new_html;
+        }
+    };
+
+    getCurrentColor = (element)=>{
+        let html = element.innerHTML;
+        let number = html.indexOf('fill=');
+        let first = (number+6);
+        let sub = html.substr(first);
+        let x = sub.indexOf('"');
+        let y = sub.substr(0, x);
+        // console.log("obtained color");
+        // console.log(y);
+        return y;
+    };
+
+    changeText = (element, text)=>{
+        // let current_text = this.getCurrentText(element);
+        // let old_html = element.innerHTML;
+        // let new_html = old_html.replace(current_text, text);
+        // element.innerHTML = new_html;
+    };
+
+    getCurrentText = (element)=>{
+        // let html = element.innerHTML;
+        // console.log("current text html");
+        // console.log(html);
+        // let number = html.indexOf('inherit;">');
+        // let first = (number+20);
+        // let sub = html.substr(first);
+        // let x = sub.indexOf('"');
+        // let y = sub.substr(0, x);
+        // console.log("obtained text");
+        // console.log(y);
+        // return y;
+    };
 }
+
+export default CircuitGrid;
+

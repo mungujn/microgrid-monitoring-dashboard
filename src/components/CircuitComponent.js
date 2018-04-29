@@ -1,365 +1,9 @@
-/**
- * Created by Mungujakisa on 4/23/2018.
- */
-import React, {Component} from 'react';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import Fade from 'material-ui/transitions/Fade';
-import {CircularProgress} from 'material-ui/Progress';
-import * as API from "../utilities/API";
+import React from 'react';
 
-const WAIT = 5000;
-
-const MOCK = true;
-
-const styles = {
-    paper: {
-        minWidth: 500,
-    },
-    inner: {
-        width: 'fit-content',
-        height: 'fit-content',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
-    buttons: {
-        width: '600px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
-    button: {
-        margin: 5
-    },
-    placeholder: {
-        height: 40,
-        width: 100,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
-};
-
-const prehash = "";
-const uhash = "";
-
-class CircuitGrid extends Component {
-
-    devices = {
-        source: {
-            id: "cell-3" + prehash + uhash,
-        },
-        relay_1: {
-            id: "cell-4" + prehash + uhash
-        },
-        transformer_1: {
-            id: "cell-5" + prehash + uhash
-        },
-        relay_2: {
-            id: "cell-6" + prehash + uhash
-        },
-        relay_3: {
-            id: "cell-8" + prehash + uhash
-        },
-        transformer_2: {
-            id: "cell-9" + prehash + uhash
-        },
-        relay_4: {
-            id: "cell-10" + prehash + uhash
-        },
-        relay_5: {
-            id: "cell-13" + prehash + uhash
-        },
-        relay_6: {
-            id: "cell-12" + prehash + uhash
-        },
-        load_1: {
-            id: "cell-14" + prehash + uhash
-        },
-        load_2: {
-            id: "cell-15" + prehash + uhash
-        }
-    };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            loading: false,
-            device_states: {
-                source: 'red',
-                relay_1: 'red',
-                transformer_1: 'red',
-                relay_2: "red",
-                relay_3: 'red',
-                transformer_2: 'red',
-                relay_4: 'red',
-                relay_5: 'red',
-                relay_6: 'red',
-                load_1: 'red',
-                load_2: 'red'
-            },
-            line_states: {
-                line_1: {
-                    current: '0A',
-                    voltage: '0V'
-                },
-                line_2: {
-                    current: '0A',
-                    voltage: '0V'
-                },
-                line_3: {
-                    current: '0A',
-                    voltage: '0V'
-                },
-                line_4: {
-                    current: '0A',
-                    voltage: '0V'
-                },
-                line_5: {
-                    current: '0A',
-                    voltage: '0V'
-                }
-            }
-        };
-
-        this.attachListeners = this.attachListeners.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    flipColor = (color) => {
-        if (color === 'red') {
-            return 'green';
-        }
-        return 'red';
-    };
-
-    handleClick(e, data) {
-        console.log("click");
-        console.log("data", data);
-
-        let device_states = this.state.device_states;
-
-        switch (data) {
-            case this.devices.relay_1.id:
-                device_states.relay_1 = this.flipColor(this.state.device_states.relay_1);
-                break;
-            case this.devices.relay_2.id:
-                device_states.relay_1 = this.flipColor(this.state.device_states.relay_2);
-                break;
-            case this.devices.relay_3.id:
-                device_states.relay_1 = this.flipColor(this.state.device_states.relay_3);
-                break;
-            case this.devices.relay_4.id:
-                device_states.relay_1 = this.flipColor(this.state.device_states.relay_4);
-                break;
-            case this.devices.relay_5.id:
-                device_states.relay_1 = this.flipColor(this.state.device_states.relay_5);
-                break;
-            case this.devices.relay_6.id:
-                device_states.relay_1 = this.flipColor(this.state.device_states.relay_6);
-                break;
-        }
-
-        this.setState({
-            loading: true,
-        });
-
-        API.updateData('development/dashboard-states', 'device-states', device_states).then((result) => {
-            console.log('Update result below');
-            console.log(result);
-            this.setState({
-                loading: false,
-            });
-        }).catch((error) => {
-            console.log('Error below');
-            console.log(error);
-            this.setState({
-                loading: false,
-            });
-        });
-    }
-
-    componentDidMount() {
-        this.firstLoad();
-    }
-
-    render() {
-        return (
-            <div>
-                <Paper elevation={5} style={styles.paper}>
-                    <div>
-                        <div style={styles.inner}>
-                            {this.getSVG()}
-                        </div>
-
-                        <div style={styles.buttons}>
-                            <div>
-                                <div style={styles.placeholder}>
-                                    <Fade
-                                        in={this.state.loading}
-                                        style={{
-                                            transitionDelay: this.state.loading ? '800ms' : '0ms',
-                                        }}
-                                        unmountOnExit
-                                    >
-                                        <CircularProgress/>
-                                    </Fade>
-                                </div>
-                            </div>
-
-
-                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_1.id))}
-                                    variant="raised" color="primary" style={styles.button}>
-                                Relay 1
-                            </Button>
-                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_2.id))}
-                                    variant="raised" color="primary" style={styles.button}>
-                                Relay 2
-                            </Button>
-                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_3.id))}
-                                    variant="raised" color="primary" style={styles.button}>
-                                Relay 3
-                            </Button>
-                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_4.id))}
-                                    variant="raised" color="primary" style={styles.button}>
-                                Relay 4
-                            </Button>
-                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_5.id))}
-                                    variant="raised" color="primary" style={styles.button}>
-                                Relay 5
-                            </Button>
-                            <Button onClick={((e) => this.handleClick(e, this.devices.relay_6.id))}
-                                    variant="raised" color="primary" style={styles.button}>
-                                Relay 6
-                            </Button>
-                        </div>
-                    </div>
-                </Paper>
-            </div>
-        );
-    }
-
-    attachListeners() {
-        console.log("Attaching listeners");
-        let svg = document.getElementById("alphasvg");
-
-        svg.addEventListener("load", () => {
-
-            console.log("Svg loaded");
-
-            // get the inner DOM of alpha.svg
-            let svgDoc = svg.contentDocument;
-
-            // get device_states
-            this.devices.relay_1.object = svgDoc.getElementById(this.devices.relay_1.id);
-            this.devices.relay_2.object = svgDoc.getElementById(this.devices.relay_2.id);
-            this.devices.relay_3.object = svgDoc.getElementById(this.devices.relay_3.id);
-            this.devices.relay_4.object = svgDoc.getElementById(this.devices.relay_4.id);
-            this.devices.relay_5.object = svgDoc.getElementById(this.devices.relay_5.id);
-            this.devices.relay_6.object = svgDoc.getElementById(this.devices.relay_6.id);
-
-            // get lines
-            lines.line_1.object = svgDoc.getElementById(lines.line_1.id);
-
-            this.updateRelays();
-
-            // this.firstLoad();
-
-        }, false);
-    };
-
-    firstLoad = () => {
-        console.log('First load of grid');
-        this.setState({
-            loading: !this.state.loading,
-        });
-        setTimeout(() => {
-            console.log('5 Seconds after grid load');
-            this.everyFewSeconds();
-            this.setState({
-                loading: !this.state.loading,
-            });
-        }, WAIT);
-    };
-
-    everyFewSeconds = () => {
-        const INTERVAL = 7000;
-        setInterval(() => {
-            console.log('Refreshing grid state');
-            API.readData('development/hardware-states', 'device-states').then((result) => {
-                let device_states = this.formatDeviceStates(result);
-                this.setState({device_states});
-            }).catch((error) => {
-                console.log('Error below');
-                console.log(error);
-            });
-
-            API.readData('development/hardware-states', 'line-states').then((result) => {
-                let line_states = this.formatLineStates(result);
-                this.setState({line_states});
-            }).catch((error) => {
-                console.log('Error below');
-                console.log(error);
-            })
-        }, INTERVAL)
-    };
-
-    formatDeviceStates = (raw) => {
-        if (MOCK){
-            let device_states = {
-                source: this.getRandomColor(),
-                relay_1: this.getRandomColor(),
-                transformer_1: this.getRandomColor(),
-                relay_2: this.getRandomColor(),
-                relay_3: this.getRandomColor(),
-                transformer_2: this.getRandomColor(),
-                relay_4: this.getRandomColor(),
-                relay_5: this.getRandomColor(),
-                relay_6: this.getRandomColor(),
-                load_1: this.getRandomColor(),
-                load_2: this.getRandomColor()
-            };
-            return device_states;
-        }
-        console.log('Raw device state results below');
-        console.log(raw);
-        return raw;
-    };
-
-    formatLineStates = (raw) => {
-        if(MOCK){
-            let line_states = {
-                line_1: {
-                    current: this.getRandomCurrent(),
-                    voltage: this.getRandomVoltage()
-                },
-                line_2: {
-                    current: this.getRandomCurrent(),
-                    voltage: this.getRandomVoltage()
-                },
-                line_3: {
-                    current: this.getRandomCurrent(),
-                    voltage: this.getRandomVoltage()
-                },
-                line_4: {
-                    current: this.getRandomCurrent(),
-                    voltage: this.getRandomVoltage()
-                },
-                line_5: {
-                    current: this.getRandomCurrent(),
-                    voltage: this.getRandomVoltage()
-                },
-                time: this.getRandomTime()
-            };
-            return line_states;
-        }
-        console.log('Raw line results below');
-        console.log(raw);
-        return raw;
-    };
-
-    getSVG = () => {
-        return <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="1285px"
-                    height="349px"
-                    version="1.1">
+export default function CircuitComponent(props) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="1285px" height="349px"
+             version="1.1" {...props}>
             <defs/>
             <g transform="translate(0.5,0.5)">
                 <g id="cell-49aa80bd56f502a1-49">
@@ -372,8 +16,7 @@ class CircuitGrid extends Component {
                 </g>
                 <g id="cell-4" content="<object label=&quot;&quot;/>
       ">
-                    <rect x="170.4" y="226.4" width={24} height={24} fill={this.state.device_states.relay_1}
-                          stroke="#000000"
+                    <rect x="170.4" y="226.4" width={24} height={24} fill="#ffffff" stroke="#000000"
                           pointerEvents="none"/>
                 </g>
                 <g id="cell-5" content="<object label=&quot;&quot; placeholders=&quot;1&quot;/>
@@ -382,8 +25,7 @@ class CircuitGrid extends Component {
                 </g>
                 <g id="cell-6" content="<object label=&quot;&quot; placeholders=&quot;1&quot;/>
     ">
-                    <path d="M 406.4 218.4 L 426.4 238.4 L 406.4 258.4 L 386.4 238.4 Z"
-                          fill={this.state.device_states.relay_2} stroke="#000000"
+                    <path d="M 406.4 218.4 L 426.4 238.4 L 406.4 258.4 L 386.4 238.4 Z" fill="#ffffff" stroke="#000000"
                           strokeMiterlimit={10} pointerEvents="none"/>
                 </g>
                 <g id="cell-7">
@@ -393,8 +35,7 @@ class CircuitGrid extends Component {
                 </g>
                 <g id="cell-8" content="<object label=&quot;&quot; placeholders=&quot;1&quot;/>
     ">
-                    <rect x={644} y="226.4" width={24} height={24} fill={this.state.device_states.relay_3}
-                          stroke="#000000"
+                    <rect x={644} y="226.4" width={24} height={24} fill="#ffffff" stroke="#000000"
                           pointerEvents="none"/>
                 </g>
                 <g id="cell-9" content="<object label=&quot;&quot; placeholders=&quot;1&quot;/>
@@ -403,8 +44,7 @@ class CircuitGrid extends Component {
                 </g>
                 <g id="cell-10" content="<object label=&quot;&quot; placeholders=&quot;1&quot;/>
     ">
-                    <rect x="874.4" y="222.4" width={32} height={32} fill={this.state.device_states.relay_4}
-                          stroke="#000000"
+                    <rect x="874.4" y="222.4" width={32} height={32} fill="#ffffff" stroke="#000000"
                           pointerEvents="none"/>
                 </g>
                 <g id="cell-11">
@@ -413,14 +53,12 @@ class CircuitGrid extends Component {
                 </g>
                 <g id="cell-12" content="<object label=&quot;&quot; placeholders=&quot;1&quot;/>
     ">
-                    <rect x="1042.4" y="258.4" width={24} height={24} fill={this.state.device_states.relay_6}
-                          stroke="#000000"
+                    <rect x="1042.4" y="258.4" width={24} height={24} fill="#ffffff" stroke="#000000"
                           pointerEvents="none"/>
                 </g>
                 <g id="cell-13" content="<object label=&quot;&quot; placeholders=&quot;1&quot;/>
     ">
-                    <rect x="1042.4" y="194.4" width={24} height={24} fill={this.state.device_states.relay_5}
-                          stroke="#000000"
+                    <rect x="1042.4" y="194.4" width={24} height={24} fill="#ffffff" stroke="#000000"
                           pointerEvents="none"/>
                 </g>
                 <g id="cell-14" content="<object label=&quot;Load 1&quot; placeholders=&quot;1&quot;/>
@@ -1017,12 +655,12 @@ class CircuitGrid extends Component {
                                         display: 'inline-block',
                                         textAlign: 'inherit',
                                         textDecoration: 'inherit'
-                                    }}>{this.state.line_states.line_1.voltage}
+                                    }}>1V
                                     </div>
                                 </div>
                             </foreignObject>
                             <text x={7} y={12} fill="#000000" textAnchor="middle" fontSize="12px"
-                                  fontFamily="Helvetica">{this.state.line_states.line_1.voltage}
+                                  fontFamily="Helvetica">1V
                             </text>
                         </switch>
                     </g>
@@ -1045,12 +683,12 @@ class CircuitGrid extends Component {
                                         display: 'inline-block',
                                         textAlign: 'inherit',
                                         textDecoration: 'inherit'
-                                    }}>{this.state.line_states.line_1.current}
+                                    }}>1A
                                     </div>
                                 </div>
                             </foreignObject>
                             <text x={7} y={12} fill="#000000" textAnchor="middle" fontSize="12px"
-                                  fontFamily="Helvetica">{this.state.line_states.line_1.current}
+                                  fontFamily="Helvetica">1A
                             </text>
                         </switch>
                     </g>
@@ -1198,12 +836,12 @@ class CircuitGrid extends Component {
                                         display: 'inline-block',
                                         textAlign: 'inherit',
                                         textDecoration: 'inherit'
-                                    }}>{this.state.line_states.line_2.voltage}
+                                    }}>2V
                                     </div>
                                 </div>
                             </foreignObject>
                             <text x={7} y={12} fill="#000000" textAnchor="middle" fontSize="12px"
-                                  fontFamily="Helvetica">{this.state.line_states.line_2.voltage}
+                                  fontFamily="Helvetica">2V
                             </text>
                         </switch>
                     </g>
@@ -1226,12 +864,12 @@ class CircuitGrid extends Component {
                                         display: 'inline-block',
                                         textAlign: 'inherit',
                                         textDecoration: 'inherit'
-                                    }}>{this.state.line_states.line_2.current}
+                                    }}>2A
                                     </div>
                                 </div>
                             </foreignObject>
                             <text x={7} y={12} fill="#000000" textAnchor="middle" fontSize="12px"
-                                  fontFamily="Helvetica">{this.state.line_states.line_2.current}
+                                  fontFamily="Helvetica">2A
                             </text>
                         </switch>
                     </g>
@@ -1254,12 +892,12 @@ class CircuitGrid extends Component {
                                         display: 'inline-block',
                                         textAlign: 'inherit',
                                         textDecoration: 'inherit'
-                                    }}>{this.state.line_states.line_3.voltage}
+                                    }}>3V
                                     </div>
                                 </div>
                             </foreignObject>
                             <text x={7} y={12} fill="#000000" textAnchor="middle" fontSize="12px"
-                                  fontFamily="Helvetica">{this.state.line_states.line_3.voltage}
+                                  fontFamily="Helvetica">3V
                             </text>
                         </switch>
                     </g>
@@ -1282,12 +920,12 @@ class CircuitGrid extends Component {
                                         display: 'inline-block',
                                         textAlign: 'inherit',
                                         textDecoration: 'inherit'
-                                    }}>{this.state.line_states.line_3.current}
+                                    }}>3A
                                     </div>
                                 </div>
                             </foreignObject>
                             <text x={7} y={12} fill="#000000" textAnchor="middle" fontSize="12px"
-                                  fontFamily="Helvetica">{this.state.line_states.line_3.current}
+                                  fontFamily="Helvetica">3A
                             </text>
                         </switch>
                     </g>
@@ -1310,12 +948,12 @@ class CircuitGrid extends Component {
                                         display: 'inline-block',
                                         textAlign: 'inherit',
                                         textDecoration: 'inherit'
-                                    }}>{this.state.line_states.line_4.voltage}
+                                    }}>4V
                                     </div>
                                 </div>
                             </foreignObject>
                             <text x={7} y={12} fill="#000000" textAnchor="middle" fontSize="12px"
-                                  fontFamily="Helvetica">{this.state.line_states.line_4.voltage}
+                                  fontFamily="Helvetica">4V
                             </text>
                         </switch>
                     </g>
@@ -1338,12 +976,12 @@ class CircuitGrid extends Component {
                                         display: 'inline-block',
                                         textAlign: 'inherit',
                                         textDecoration: 'inherit'
-                                    }}>{this.state.line_states.line_4.current}
+                                    }}>4A
                                     </div>
                                 </div>
                             </foreignObject>
                             <text x={7} y={12} fill="#000000" textAnchor="middle" fontSize="12px"
-                                  fontFamily="Helvetica">{this.state.line_states.line_4.current}
+                                  fontFamily="Helvetica">4A
                             </text>
                         </switch>
                     </g>
@@ -1366,12 +1004,12 @@ class CircuitGrid extends Component {
                                         display: 'inline-block',
                                         textAlign: 'inherit',
                                         textDecoration: 'inherit'
-                                    }}>{this.state.line_states.line_5.voltage}
+                                    }}>5V
                                     </div>
                                 </div>
                             </foreignObject>
                             <text x={7} y={12} fill="#000000" textAnchor="middle" fontSize="12px"
-                                  fontFamily="Helvetica">{this.state.line_states.line_5.voltage}
+                                  fontFamily="Helvetica">5V
                             </text>
                         </switch>
                     </g>
@@ -1394,59 +1032,17 @@ class CircuitGrid extends Component {
                                         display: 'inline-block',
                                         textAlign: 'inherit',
                                         textDecoration: 'inherit'
-                                    }}>{this.state.line_states.line_5.current}
+                                    }}>5A
                                     </div>
                                 </div>
                             </foreignObject>
                             <text x={7} y={12} fill="#000000" textAnchor="middle" fontSize="12px"
-                                  fontFamily="Helvetica">{this.state.line_states.line_5.current}
+                                  fontFamily="Helvetica">5A
                             </text>
                         </switch>
                     </g>
                 </g>
             </g>
         </svg>
-    };
-
-    getRandomTime = () => {
-        return `${this.getRndInteger(0, 23)}:${this.getRndInteger(10, 59)} AM`;
-    };
-
-    getRandomCurrent = () => {
-        return `${this.getRndInteger(200, 300)} A`;
-    };
-
-    getRandomVoltage = () => {
-        return `${this.getRndInteger(110, 240)} V`;
-    };
-
-    getRandomColor = () => {
-        let arr = ['red', 'green', 'red', 'red', 'green', 'green', 'green', 'green'];
-        let index = this.getRndInteger(0,7);
-        return arr[index];
-    };
-
-    getRndInteger = (min, max)=> {
-        return Math.floor(Math.random() * (max - min) ) + min;
-    };
+    );
 }
-
-const lines = {
-    line_1: {
-        id: "cell-36" + prehash + uhash
-    },
-    line_2: {
-        id: "cell-37" + prehash + uhash
-    },
-    line_3: {
-        id: "cell-38" + prehash + uhash
-    },
-    line_4: {
-        id: "cell-39" + prehash + uhash
-    },
-    line_5: {
-        id: "cell-40" + prehash + uhash
-    }
-};
-
-export default CircuitGrid;

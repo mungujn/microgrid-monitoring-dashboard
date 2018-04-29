@@ -16,3 +16,15 @@ export function logout(email, password) {
 export function isLoggedIn() {
     return backend.isLoggedIn()
 }
+
+export function saveData(location, key, value){
+    backend.saveData(location, key, value)
+}
+
+export function readData(location, key){
+    return backend.readData(location, key)
+}
+
+export function updateData(location, key, values){
+    return backend.updateData(location, key, values)
+}

@@ -50,7 +50,11 @@ export function isLoggedIn() {
     }, ()=>{});
 }
 
-function saveData(location, key, value){
+export function changeState() {
+
+}
+
+export function saveData(location, key, value){
     //location = main node
     let ref = db.ref(location);
     return ref.child(key).set(value).then((data)=>{
@@ -62,7 +66,7 @@ function saveData(location, key, value){
     });
 }
 
-function readData(location, key){
+export function readData(location, key){
     "use strict";
     return db.ref(location).child(key).once('value').then((result)=>{
         //console.log('common.js: Read result object follows below');
@@ -74,7 +78,7 @@ function readData(location, key){
     });
 }
 
-function updateData(location, key, values){
+export function updateData(location, key, values){
     //location = main node
     let ref = db.ref(location);
     return ref.child(key).update(values).then((data)=>{
