@@ -20,7 +20,7 @@ class Layout extends Component {
         super(props);
         this.state = {
             drawer_open: false,
-            label: "Mini-grid Monitoring"
+            label: "Micro-grid Monitoring"
         };
 
         this.handleDrawerOpen = this.handleDrawerOpen.bind(this);

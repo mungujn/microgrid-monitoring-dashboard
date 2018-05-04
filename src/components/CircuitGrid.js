@@ -281,7 +281,7 @@ class CircuitGrid extends Component {
     };
 
     everyFewSeconds = () => {
-        const INTERVAL = 7000;
+        const INTERVAL = 3000;
         setInterval(() => {
             console.log('Refreshing grid state');
             API.readData('development/hardware-states', 'device-states').then((result) => {
