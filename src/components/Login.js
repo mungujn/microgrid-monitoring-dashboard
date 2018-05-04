@@ -74,7 +74,7 @@ class Login extends Component {
         return (
             <div style={styles.root}>
                 <Paper elevation={5} style={styles.paper}>
-                    <CardHeader style={styles.header} title="Hospital mini-grid Administration Login">
+                    <CardHeader style={styles.header} title="Micro-grid Administration Login">
 
                     </CardHeader>
                     <form onSubmit={this.handleClickLogin} style={styles.div_in_div}>
