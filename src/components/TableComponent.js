@@ -16,7 +16,7 @@ const styles = {
     }
 };
 
-const MOCK = true;
+const MOCK = false;
 
 class TableComponent extends Component {
     constructor(props) {
@@ -160,7 +160,6 @@ class TableComponent extends Component {
             ]
         } else {
             return [
-                this.getMockData()
             ]
         }
     };

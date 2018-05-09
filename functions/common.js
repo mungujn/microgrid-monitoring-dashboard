@@ -24,10 +24,10 @@ function saveData(location, key, value){
     //location = main node
     let ref = db.ref(location);
     return ref.child(key).set(value).then((data)=>{
-        console.log('common.js: Save result object follows above');
+        console.log("common.js:1: Save result object follows above");
         return console.log(data);
     }).catch((error)=>{
-        console.log('common.js: Save error object follows above');
+        console.log("common.js:2: Save error object follows above");
         return console.log(error);
     });
 }
@@ -75,16 +75,16 @@ function updateData(location, key, values){
     //location = main node
     let ref = db.ref(location);
     return ref.child(key).update(values).then((data)=>{
-        console.log('common.js: Save result object follows above');
+        console.log("common.js: Save result object follows above");
         return console.log(data);
     }).catch((error)=>{
-        console.log('common.js: Save error object follows above');
+        console.log("common.js: Save error object follows above");
         return console.log(error);
     });
 }
 
 function logObject(file, message, object) {
-    console.log(file + ': '+ message + ' object follows above');
+    console.log(file + ': '+ message + " object follows above");
     console.log(object);
 }
 
