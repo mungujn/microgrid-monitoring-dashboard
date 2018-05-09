@@ -8,9 +8,9 @@ import Fade from 'material-ui/transitions/Fade';
 import {CircularProgress} from 'material-ui/Progress';
 import * as API from "../utilities/API";
 
-const WAIT = 5000;
+const WAIT = 3000;
 
-const MOCK = true;
+const MOCK = false;
 
 const styles = {
     paper: {
@@ -142,25 +142,29 @@ class CircuitGrid extends Component {
                 device_states.relay_1 = this.flipColor(this.state.device_states.relay_1);
                 break;
             case this.devices.relay_2.id:
-                device_states.relay_1 = this.flipColor(this.state.device_states.relay_2);
+                device_states.relay_2 = this.flipColor(this.state.device_states.relay_2);
                 break;
             case this.devices.relay_3.id:
-                device_states.relay_1 = this.flipColor(this.state.device_states.relay_3);
+                device_states.relay_3 = this.flipColor(this.state.device_states.relay_3);
                 break;
             case this.devices.relay_4.id:
-                device_states.relay_1 = this.flipColor(this.state.device_states.relay_4);
+                device_states.relay_4 = this.flipColor(this.state.device_states.relay_4);
                 break;
             case this.devices.relay_5.id:
-                device_states.relay_1 = this.flipColor(this.state.device_states.relay_5);
+                device_states.relay_5 = this.flipColor(this.state.device_states.relay_5);
                 break;
             case this.devices.relay_6.id:
-                device_states.relay_1 = this.flipColor(this.state.device_states.relay_6);
+                device_states.relay_6 = this.flipColor(this.state.device_states.relay_6);
                 break;
         }
 
         this.setState({
             loading: true,
         });
+
+        if(!MOCK){
+            this.setState({device_states});
+        }
 
         API.updateData('development/dashboard-states', 'device-states', device_states).then((result) => {
             console.log('Update result below');
@@ -272,7 +276,7 @@ class CircuitGrid extends Component {
             loading: !this.state.loading,
         });
         setTimeout(() => {
-            console.log('5 Seconds after grid load');
+            console.log('3 Seconds after grid load');
             this.everyFewSeconds();
             this.setState({
                 loading: !this.state.loading,

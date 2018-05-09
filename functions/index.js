@@ -16,12 +16,23 @@ exports.receiveData = functions.https.onRequest((request, response) => {
         response.send(error);
     });
 });
-*/
 
 exports.saveData = functions.https.onRequest((request, response) => {
     return server.saveData(request.body).then((result)=>{
         common.logObject('index.js', 'Save data', request);
         common.logObject('index.js', 'Save result', result);
+        return response.send(result);
+    }).catch((error) => {
+        common.logObject('index.js', 'Save error', error);
+        response.send(error);
+    });
+});
+*/
+
+exports.saveData = functions.https.onRequest((request, response) => {
+    //common.logObject('index.js', 'Save data request', request);
+    return server.saveData(request).then((result)=>{
+        //common.logObject('index.js', 'Save result', result);
         return response.send(result);
     }).catch((error) => {
         common.logObject('index.js', 'Save error', error);
