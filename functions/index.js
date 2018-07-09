@@ -30,7 +30,7 @@ exports.saveData = functions.https.onRequest((request, response) => {
 */
 
 exports.saveData = functions.https.onRequest((request, response) => {
-    //common.logObject('index.js', 'Save data request', request);
+    common.logObject('index.js', 'Save data request query', request.query);
     return server.saveData(request).then((result)=>{
         //common.logObject('index.js', 'Save result', result);
         return response.send(result);

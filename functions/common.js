@@ -48,6 +48,9 @@ function getCurrentTime() {
     let d = new Date();
     let hour = d.getHours() + 3;
     let minutes = d.getMinutes();
+    if(minutes<10){
+        minutes = '0' + minutes
+    }
     return getHoursIn12HourFormat(hour) + ':' + minutes + getAMOrPM(hour);
 }
 

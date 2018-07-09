@@ -95,7 +95,7 @@ class TableComponent extends Component {
     };
 
     everyFewSeconds = () => {
-        const INTERVAL = 7000;
+        const INTERVAL = 10000;
         setInterval(() => {
             console.log('Refreshing table state');
             /**/
