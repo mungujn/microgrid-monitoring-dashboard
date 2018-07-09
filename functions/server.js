@@ -84,6 +84,7 @@ function saveData(request) {
         });
     });
 }
+
 /*
 function pickData(body) {
     "use strict";
@@ -140,46 +141,74 @@ function formatLineStateData(request) {
             voltage: ''
         },
         time: common.getCurrentTime(),
-        power: ''
+        power: '' + 'W'
     };
 
-    if(validateLineStates(request)) {
-        console.log("server.js: request contains valid line currents and voltage values");
-        line_states = {
-            line_1: { //generation
-                current: request.query.current_generation,
-                voltage: request.query.voltage_generation
-            },
-            line_2: { //transmission
-                current: request.query.current_transmission,
-                voltage: request.query.voltage_transmission
-            },
-            line_3: { //distribution
-                current: request.query.current_generation,
-                voltage: request.query.voltage_generation
-            },
-            line_4: { //load 1
-                current: request.query.current_load1,
-                voltage: request.query.voltage_load1
-            },
-            line_5: { //load 2
-                current: request.query.current_load2,
-                voltage: request.query.voltage_load2
-            },
-            time: common.getCurrentTime(),
-            power: request.query.Power
-        };
-
-    } else {
-        console.log("server.js: request does not contain valid line currents and voltage values");
-    }
+    //no longer validating data validateLineStates(request)
+    displayReceivedLineStates(request);
+    // console.log("server.js: request contains valid line currents and voltage values");
+    line_states = {
+        line_1: { //generation
+            current: formatCurrent(request.query.current_generation),
+            voltage: formatVoltage(request.query.voltage_generation)
+        },
+        line_2: { //transmission
+            current: formatCurrent(request.query.current_transmission),
+            voltage: formatVoltage(request.query.voltage_transmission)
+        },
+        line_3: { //distribution
+            current: formatCurrent(request.query.current_distribution),
+            voltage: formatVoltage(request.query.voltage_load1)
+        },
+        line_4: { //load 1
+            current: formatCurrent(request.query.current_load1),
+            voltage: formatVoltage(request.query.voltage_load1)
+        },
+        line_5: { //load 2
+            current: formatCurrent(request.query.current_load2),
+            voltage: formatVoltage(request.query.voltage_load2)
+        },
+        time: common.getCurrentTime(),
+        power: request.query.Power + 'W'
+    };
     return line_states;
+}
+
+function displayReceivedLineStates(request) {
+    console.log('request.query.current_generation' + request.query.current_generation);
+    console.log('request.query.current_transmission: ' + request.query.current_transmission);
+    console.log('request.query.current_distribution' + request.query.current_distribution);
+    console.log('request.query.current_load1' + request.query.current_load1);
+    console.log('request.query.current_load2' + request.query.current_load2);
+    console.log('request.query.voltage_generation' + request.query.voltage_generation);
+    console.log('request.query.voltage_transmission' + request.query.voltage_transmission);
+    console.log('(request.query.voltage_load1' + (request.query.voltage_load1));
+    console.log('request.query.voltage_load2' + request.query.voltage_load2);
+    console.log('request.query.Power' + request.query.Power);
+}
+
+function formatVoltage(value) {
+    let add_post_fix = true;
+
+    if (add_post_fix) {
+        return value + 'V'
+    }
+    return value;
+}
+
+function formatCurrent(value) {
+    let add_post_fix = true;
+
+    if (add_post_fix) {
+        return value + 'A'
+    }
+    return value;
 }
 
 function formatRelayStateData(request) {
     let device_states = {
         relay_1: 'green',
-        relay_2: "green",
+        relay_2: 'green',
         relay_3: 'green',
         relay_4: 'green',
         relay_5: 'green',
@@ -187,21 +216,36 @@ function formatRelayStateData(request) {
         time: common.getCurrentTime(),
     };
 
-    if(validateRelayStates(request)) {
-        console.log("server.js: request contains valid relay state values");
-        device_states = {
-            relay_1: request.query.relay_1,
-            relay_2: request.query.relay_2,
-            relay_3: request.query.relay_3,
-            relay_4: request.query.relay_4,
-            relay_5: request.query.relay_5,
-            relay_6: request.query.relay_6,
-            time: common.getCurrentTime(),
-        };
-    } else {
-        console.log("server.js: request does not contain valid relay state values")
-    }
+    // not validatingvalidateRelayStates(request)
+    console.log("server.js: request contains valid relay state values");
+    device_states = {
+        relay_1: getInRedOrGreen(request.query.relay1),
+        relay_2: getInRedOrGreen(request.query.relay2),
+        relay_3: getInRedOrGreen(request.query.relay3),
+        relay_4: getInRedOrGreen(request.query.relay4),
+        relay_5: getInRedOrGreen(request.query.relay5),
+        relay_6: getInRedOrGreen(request.query.relay6),
+        time: common.getCurrentTime(),
+    };
     return device_states;
+}
+
+function getInRedOrGreen(value) {
+    console.log('Relay value: ' + value);
+    switch (value){
+        case '0':
+            return 'red';
+        case '1':
+            return 'green';
+        case 0:
+            return 'red';
+        case 1:
+            return 'green';
+        case "0":
+            return 'red';
+        case "1":
+            return 'green'
+    }
 }
 
 function formatReturnDeviceStateData(data) {
@@ -223,30 +267,29 @@ function getBinaryRepresentationOfState(state) {
     }
 }
 
-function validateLineStates(request){
+function validateLineStates(request) {
     console.log(request.query.voltage);
-    if(request.query.current_generation!== undefined &&
-        request.query.current_transmission!== undefined &&
-        request.query.current_load1!== undefined &&
-        request.query.current_load2!== undefined &&
-        request.query.voltage_generation!== undefined &&
-        request.query.voltage_transmission!== undefined &&
-        request.query.voltage_load1!== undefined &&
-        request.query.voltage_load2!== undefined &&
-        request.query.Power!== undefined){
+    if (request.query.current_generation !== undefined &&
+        request.query.current_transmission !== undefined &&
+        request.query.current_load1 !== undefined &&
+        request.query.current_load2 !== undefined &&
+        request.query.voltage_generation !== undefined &&
+        request.query.voltage_transmission !== undefined &&
+        request.query.voltage_load1 !== undefined &&
+        request.query.voltage_load2 !== undefined &&
+        request.query.Power !== undefined) {
         return true;
     }
     return false;
 }
 
-function validateRelayStates(request){
-    console.log(request.query.voltage);
-    if(request.query.relay_1!== undefined &&
+function validateRelayStates(request) {
+    if (request.query.relay_1 !== undefined &&
         request.query.relay_2 !== undefined &&
         request.query.relay_3 !== undefined &&
         request.query.relay_4 !== undefined &&
         request.query.relay_5 !== undefined &&
-        request.query.relay_6 !== undefined){
+        request.query.relay_6 !== undefined) {
         return true;
     }
     return false;

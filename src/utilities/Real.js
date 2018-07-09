@@ -3,7 +3,7 @@
  */
 import firebase from 'firebase'
 
-const config = {
+const config = { 
     apiKey: "***REMOVED***",
     authDomain: "***REMOVED***",
     databaseURL: "***REMOVED***",
