@@ -4,12 +4,12 @@
 import firebase from 'firebase'
 
 const config = { 
-    apiKey: "***REMOVED***",
-    authDomain: "***REMOVED***",
-    databaseURL: "***REMOVED***",
-    projectId: "***REMOVED***",
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
     storageBucket: "",
-    messagingSenderId: "***REMOVED***"
+    messagingSenderId: ""
 };
 firebase.initializeApp(config);
 const db = firebase.database();
