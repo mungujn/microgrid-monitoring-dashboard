@@ -16,4 +16,4 @@ The backend service runs in a Node.js container provided by [firebase](https://f
 This particular micro grid case study was for a hospital in Kanungu which is a district in a remote part of Uganda
 
 <img src="https://raw.githubusercontent.com/mungujn/microgrid-monitoring-dashboard/master/static/screenshot.PNG"/>
-            <p>Screenshot 1</p>
+            <p>Screenshot with mock current and voltage values</p>
