@@ -14,7 +14,7 @@ const serviceAccount = require("./skey.json");
 /*
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "***REMOVED***/"
+    databaseURL: "https://ak-minigrid.firebaseio.com/"
 });
 // const db = admin.database();
 /**/
