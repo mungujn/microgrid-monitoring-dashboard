@@ -1,4 +1,4 @@
-# Microgrid electrical grid monitoring dashboard
+# Micro electrical grid monitoring dashboard
 
 A web application for remotely monitoring relatively simple electrical grids. Built using [React.js](https://reactjs.org/ "React.js") and the [material-ui react library](https://material-ui.com/ "Material UI").
 
