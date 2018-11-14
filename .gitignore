@@ -1,5 +1,7 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
+microgrid/functions/skey.json
+functions/script.js
 
+# create-react-app added ignore files
 # dependencies
 /node_modules
 /functions/node_modules
@@ -26,4 +28,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .idea
-microgrid/functions/skey.json
