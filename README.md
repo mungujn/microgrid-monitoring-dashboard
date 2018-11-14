@@ -14,7 +14,23 @@ Table and grid values are sent from the physical circuit by a GSM module which i
 
 The backend service runs in a Node.js container provided by [firebase](https://firebase.google.com/products/functions/ "Cloud functions").
 
-This particular micro grid case study was for a hospital in Kanungu which is a district in a remote part of Uganda
+## Micro grids
 
-<img src="https://raw.githubusercontent.com/mungujn/microgrid-monitoring-dashboard/master/static/screenshot.PNG"/>
-            <p>Screenshot with mock current and voltage values</p>
+A micro grid refers to a group of interconnected loads and distributed energy resources within clearly defined boundaries that acts as a single controllable entity with respect to the grid. 
+Micro grids are small scale grids and usually provide power for rural areas away from the national grid. Micro grids make use of distributed energy sources and these can be both conventional and renewable sources and these include wind, solar, hydro power among others. The energy source
+to use depends on the resource availability, geographical location and load demand.
+Renewable energy sources are prominent in micro-grid projects with hydro power and solar energy being the commonly used in Uganda.
+
+This particular micro grid case study was for a hospital in Kanungu, a district in a remote part of Uganda.
+
+![Hospital location](https://raw.githubusercontent.com/mungujn/microgrid-monitoring-dashboard/master/static/hospital.jpg "Hospital location")
+
+![The hospitals power house](https://raw.githubusercontent.com/mungujn/microgrid-monitoring-dashboard/master/static/power-meters.png "The hospitals power house")
+
+![Physical power meters](https://raw.githubusercontent.com/mungujn/microgrid-monitoring-dashboard/master/static/power-meters.png "Physical power meters")
+
+![Proteus grid simulation](https://raw.githubusercontent.com/mungujn/microgrid-monitoring-dashboard/master/static/proteus-simulation.jpg "Proteus grid simulation")
+
+![Physical grid simulation using an arduino](https://raw.githubusercontent.com/mungujn/microgrid-monitoring-dashboard/master/static/proteus-simulation.jpg "Physical grid simulation using an arduino")
+
+![Web app screenshot](https://raw.githubusercontent.com/mungujn/microgrid-monitoring-dashboard/master/static/screenshot.png "Web app screenshot")
