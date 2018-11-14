@@ -1,14 +1,23 @@
 /**
  * Created by Mungujakisa on 10/24/2017.
+ * Side drawer component
  */
-import React, {Component} from 'react';
-import {Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText} from "material-ui";
-import Assessment from "material-ui-icons/Assessment";
-import Assignment from "material-ui-icons/Assignment";
-import DirectionsBus from "material-ui-icons/DirectionsBus";
-import FolderOpen from "material-ui-icons/DirectionsBus";
+import React, { Component } from 'react';
+import {
+    Divider,
+    Drawer,
+    IconButton,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText
+} from 'material-ui';
+import Assessment from 'material-ui-icons/Assessment';
+import Assignment from 'material-ui-icons/Assignment';
+import DirectionsBus from 'material-ui-icons/DirectionsBus';
+import FolderOpen from 'material-ui-icons/DirectionsBus';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
-import {NavLink} from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
 const drawer_width = '15';
 
@@ -16,35 +25,35 @@ const styles = {
     drawer_paper: {
         position: 'relative',
         height: '100%',
-        width: drawer_width + 'em',
+        width: drawer_width + 'em'
     },
-    drawer_inner: {
-
-    },
+    drawer_inner: {},
     drawer_header: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        padding: '0 1em 1em',
+        padding: '0 1em 1em'
     },
-    list: {
-
-    },
+    list: {},
     push: {
         paddingTop: '0.5em'
     }
 };
+
+/**
+ * Side drawer component
+ */
 class DrawerComponet extends Component {
     render() {
         const drawer_open = this.props.drawer_open;
         return (
-            <Drawer
-                type="persistent"
-                open={drawer_open}
-            >
+            <Drawer type="persistent" open={drawer_open}>
                 <div style={styles.drawer_inner}>
                     <div style={styles.drawer_header}>
-                        <IconButton style={styles.push} onClick={this.props.handleDrawerClose}>
+                        <IconButton
+                            style={styles.push}
+                            onClick={this.props.handleDrawerClose}
+                        >
                             <ChevronLeftIcon />
                         </IconButton>
                     </div>
@@ -52,27 +61,30 @@ class DrawerComponet extends Component {
                     <List style={styles.list}>
                         <ListItem button>
                             <ListItemIcon>
-                                <Assessment />
+                                <FolderOpen />
                             </ListItemIcon>
-                            <ListItemText primary={<NavLink to='/sermons' className="clean_link">Sermons</NavLink>}/>
-                        </ListItem>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <Assignment />
-                            </ListItemIcon>
-                            <ListItemText primary={<NavLink to='/devotions' className="clean_link">Devotions</NavLink>} />
+                            <ListItemText
+                                primary={
+                                    <NavLink to="/grids" className="clean_link">
+                                        Grids
+                                    </NavLink>
+                                }
+                            />
                         </ListItem>
                         <ListItem button>
                             <ListItemIcon>
                                 <FolderOpen />
                             </ListItemIcon>
-                            <ListItemText primary={<NavLink to='/announcements' className="clean_link">Announcements</NavLink>} />
-                        </ListItem>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <FolderOpen />
-                            </ListItemIcon>
-                            <ListItemText primary={<NavLink to='/events' className="clean_link">Events</NavLink>} />
+                            <ListItemText
+                                primary={
+                                    <NavLink
+                                        to="/settings"
+                                        className="clean_link"
+                                    >
+                                        Settings
+                                    </NavLink>
+                                }
+                            />
                         </ListItem>
                     </List>
                     <Divider />
@@ -81,7 +93,16 @@ class DrawerComponet extends Component {
                             <ListItemIcon>
                                 <DirectionsBus />
                             </ListItemIcon>
-                            <ListItemText primary={<NavLink to='/account' className="clean_link">User Account</NavLink>} />
+                            <ListItemText
+                                primary={
+                                    <NavLink
+                                        to="/account"
+                                        className="clean_link"
+                                    >
+                                        User Account
+                                    </NavLink>
+                                }
+                            />
                         </ListItem>
                     </List>
                 </div>

@@ -1,13 +1,19 @@
 /**
- * Created by Mungujakisa on 10/24/2017.
+ * Created by Mungujakisa
+ * Logout button
  */
-import React, {Component} from 'react';
-import {Button} from "material-ui";
+import React, { Component } from 'react';
+import { Button } from 'material-ui';
 
+/**
+ * Logout button component
+ */
 class LogoutButton extends Component {
     render() {
         return (
-            <Button color="contrast" onClick={this.props.logout}>Logout</Button>
+            <Button color="contrast" onClick={this.props.logout}>
+                Logout
+            </Button>
         );
     }
 }

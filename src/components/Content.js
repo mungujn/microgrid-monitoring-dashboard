@@ -1,12 +1,11 @@
 /**
  * Created by Mungujakisa on 4/23/2018.
+ * This component combines the circuit grid and the table
  */
-import React, {Component} from 'react';
-import {Grid} from "material-ui";
-import Paper from 'material-ui/Paper';
-import CircuitGrid from "./CircuitGrid";
-import TableComponent from "./TableComponent";
-
+import React, { Component } from 'react';
+import { Grid } from 'material-ui';
+import CircuitGrid from './CircuitGrid';
+import TableComponent from './TableComponent';
 
 const style = {
     content: {
@@ -20,22 +19,36 @@ const style = {
         marginTop: 56
     },
     content_shift: {
-        marginLeft: '15em',
-    },
+        marginLeft: '15em'
+    }
 };
 
+/**
+ * combines the circuit grid and the table
+ */
 class Content extends Component {
     render() {
         const drawer_open = false;
         return (
-            <div style={Object.assign({}, style.content, drawer_open && style.content_shift)}>
-                <Grid container direction="column" spacing={24} alignItems="stretch">
+            <div
+                style={Object.assign(
+                    {},
+                    style.content,
+                    drawer_open && style.content_shift
+                )}
+            >
+                <Grid
+                    container
+                    direction="column"
+                    spacing={24}
+                    alignItems="stretch"
+                >
                     <Grid item xs={12}>
-                            <CircuitGrid/>
+                        <CircuitGrid />
                     </Grid>
 
                     <Grid item>
-                        <TableComponent/>
+                        <TableComponent />
                     </Grid>
                 </Grid>
             </div>

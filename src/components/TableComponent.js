@@ -1,23 +1,28 @@
 /**
- * Created by Mungujakisa on 4/23/2018.
+ * Created by Mungujakisa on 4/23/2018
+ * Table component
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
-import * as API from "../utilities/API";
+import * as API from '../utilities/API';
 
 const styles = {
     paper: {
-        minWidth: 500,
+        minWidth: 500
     },
     table: {
         width: '100%',
         marginLeft: 'auto',
-        marginRight: 'auto',
+        marginRight: 'auto'
     }
 };
 
-const MOCK = false;
+// Display mock data while testing the table
+const MOCK = true;
 
+/**
+ * Table component
+ */
 class TableComponent extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +35,10 @@ class TableComponent extends Component {
         this.firstLoad();
     }
 
-    displayEntries = (received_entries) => {
+    /**
+     * Display retirieved entries
+     */
+    displayEntries = received_entries => {
         let items = [];
         received_entries.map(entry => {
             items.push(
@@ -48,11 +56,14 @@ class TableComponent extends Component {
                     <td>{entry.power}</td>
                     <td>{entry.time}</td>
                 </tr>
-            )
+            );
         });
         return items;
     };
 
+    /**
+     * Display table
+     */
     render() {
         let entries = this.displayEntries(this.state.entries);
 
@@ -60,11 +71,13 @@ class TableComponent extends Component {
             <div>
                 <Paper elevation={5} style={styles.paper}>
                     <div>
-                        <table style={Object.assign({}, styles.table, styles.th)}>
+                        <table
+                            style={Object.assign({}, styles.table, styles.th)}
+                        >
                             <tr>
                                 <th colSpan="5">Voltage</th>
                                 <th colSpan="5">Currents</th>
-                                <th></th>
+                                <th />
                                 <th>Time</th>
                             </tr>
                             <tr>
@@ -79,7 +92,7 @@ class TableComponent extends Component {
                                 <th>Line 4</th>
                                 <th>Line 5</th>
                                 <th>Power</th>
-                                <td></td>
+                                <td />
                             </tr>
                             {entries}
                         </table>
@@ -89,36 +102,50 @@ class TableComponent extends Component {
         );
     }
 
+    /**
+     * Begin table refreshes
+     */
     firstLoad = () => {
         console.log('First load of table');
         this.everyFewSeconds();
     };
 
+    /**
+     * Update table every few seconds
+     */
     everyFewSeconds = () => {
         const INTERVAL = 10000;
         setInterval(() => {
             console.log('Refreshing table state');
             /**/
-            API.readData('development/hardware-states', 'line-states').then((result) => {
-                let old_values = this.state.entries;
-                let received_values = this.formatLineStates(result);
-                old_values.unshift(received_values);
-                this.updateEntries(old_values)
-            }).catch((error) => {
-                console.log('Error below');
-                console.log(error);
-            })
+            API.readData('development/hardware-states', 'line-states')
+                .then(result => {
+                    let old_values = this.state.entries;
+                    let received_values = this.formatLineStates(result);
+                    old_values.unshift(received_values);
+                    this.updateEntries(old_values);
+                })
+                .catch(error => {
+                    console.log('Error below');
+                    console.log(error);
+                });
             /**/
-        }, INTERVAL)
+        }, INTERVAL);
     };
 
-    updateEntries = (received_entries) => {
+    /**
+     * Update entries
+     */
+    updateEntries = received_entries => {
         this.setState({
             entries: received_entries
         });
     };
 
-    formatLineStates = (raw) => {
+    /**
+     * Format line voltage and current values for display in the SVG object
+     */
+    formatLineStates = raw => {
         if (MOCK) {
             let line_states = {
                 line_1: {
@@ -151,19 +178,20 @@ class TableComponent extends Component {
         return raw;
     };
 
+    /**
+     * Display initial data on component first load
+     */
     getFirstData = () => {
         if (MOCK) {
-            return [
-                this.getMockData(),
-                this.getMockData(),
-                this.getMockData()
-            ]
+            return [this.getMockData(), this.getMockData(), this.getMockData()];
         } else {
-            return [
-            ]
+            return [];
         }
     };
 
+    /**
+     * Returns mock data for application testing
+     */
     getMockData = () => {
         let line_states = {
             line_1: {
@@ -192,22 +220,39 @@ class TableComponent extends Component {
         return line_states;
     };
 
+    /**
+     * TODO : Refactor this into a method since it is repeated in the CircuitGrid component
+     * Get random time
+     */
     getRandomTime = () => {
         return `${this.getRndInteger(0, 23)}:${this.getRndInteger(10, 59)} AM`;
     };
 
+    /**
+     * Get random power value
+     */
     getRandomPower = () => {
         return `${this.getRndInteger(500, 700)} Watts`;
     };
 
+    /**
+     * Get random current value
+     */
     getRandomCurrent = () => {
         return `${this.getRndInteger(200, 300)} A`;
     };
 
+    /**
+     * Get random voltage value
+     */
     getRandomVoltage = () => {
         return `${this.getRndInteger(110, 240)} V`;
     };
 
+    /**
+     * TODO : Refactor
+     * Get random integer value
+     */
     getRndInteger = (min, max) => {
         return Math.floor(Math.random() * (max - min)) + min;
     };

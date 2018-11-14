@@ -1,25 +1,21 @@
 /**
- * Created by Mungujakisa on 10/17/2017.
+ * Created by Mungujakisa
+ * Login UI
  */
-import React, {Component} from 'react';
-import {
-    Button, CardHeader, Paper,
-    TextField
-} from "material-ui";
+import React, { Component } from 'react';
+import { Button, CardHeader, Paper, TextField } from 'material-ui';
 
-import * as API from "../utilities/API";
+import * as API from '../utilities/API';
 
 const styles = {
     root: {
-    maxWidth: '25em',
-    maxHeight: '25em',
-    marginTop: '2em',
-    marginRight: 'auto',
-    marginLeft: 'auto',
+        maxWidth: '25em',
+        maxHeight: '25em',
+        marginTop: '2em',
+        marginRight: 'auto',
+        marginLeft: 'auto'
     },
-    text_field: {
-
-    },
+    text_field: {},
     paper: {
         padding: '2em'
     },
@@ -27,34 +23,38 @@ const styles = {
         paddingLeft: 0,
         paddingTop: 0
     },
-    show: {
-
-    },
+    show: {},
     hide: {
         display: 'none'
     },
     login_button_div: {
         width: '100%',
-        textAlign: 'center',
+        textAlign: 'center'
     },
     login_button: {
         display: 'inline-block'
-    },
+    }
 };
 
+/**
+ * Login component
+ */
 class Login extends Component {
-
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            email: "",
-            password: "",
+            email: '',
+            password: ''
         };
         this.handleClickLogin = this.handleClickLogin.bind(this);
         this.handleInput = this.handleInput.bind(this);
     }
 
-    handleInput(event){
+    /**
+     * Handle email and password input
+     * @param {*} event input event
+     */
+    handleInput(event) {
         const id = event.target.id;
         const value = event.target.value;
         this.setState({
@@ -62,7 +62,11 @@ class Login extends Component {
         });
     }
 
-    handleClickLogin(event){
+    /**
+     * Handle login button press
+     * @param {*} event input event
+     */
+    handleClickLogin(event) {
         event.preventDefault();
         let email = this.state.email;
         let password = this.state.password;
@@ -70,14 +74,21 @@ class Login extends Component {
         this.props.login(email, password);
     }
 
+    /**
+     * Render login UI
+     */
     render() {
         return (
             <div style={styles.root}>
                 <Paper elevation={5} style={styles.paper}>
-                    <CardHeader style={styles.header} title="Micro-grid Administration Login">
-
-                    </CardHeader>
-                    <form onSubmit={this.handleClickLogin} style={styles.div_in_div}>
+                    <CardHeader
+                        style={styles.header}
+                        title="Micro-grid Administration Login"
+                    />
+                    <form
+                        onSubmit={this.handleClickLogin}
+                        style={styles.div_in_div}
+                    >
                         <TextField
                             fullWidth
                             required
@@ -88,7 +99,7 @@ class Login extends Component {
                             onChange={this.handleInput}
                             margin="normal"
                         />
-                        <br/>
+                        <br />
                         <TextField
                             fullWidth
                             required
@@ -99,10 +110,15 @@ class Login extends Component {
                             onChange={this.handleInput}
                             margin="normal"
                         />
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                         <div style={styles.login_button_div}>
-                            <Button style={styles.login_button} type="submit" raised color="primary">
+                            <Button
+                                style={styles.login_button}
+                                type="submit"
+                                raised
+                                color="primary"
+                            >
                                 Login
                             </Button>
                         </div>
