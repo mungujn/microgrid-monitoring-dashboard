@@ -11,7 +11,7 @@ const styles = {
     small_screen: {
         position: 'relative',
         display: 'flex',
-        width: '100%' /*horizontal scroll,*/,
+        /*width: '100%' /*horizontal scroll,*/
         height: '100%',
         zIndex: 1
     },
