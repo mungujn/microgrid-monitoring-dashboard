@@ -4,6 +4,17 @@ A web application for remotely monitoring relatively micro electrical grids. Bui
 
 After launching the application, a user logs in with an email address and a password. Authentication is provided by [firebase](https://firebase.google.com/products/auth/ 'firebase auth'). Once authenticated they move on to a control dashboard.
 
+## Demo
+
+You can test the application [here](https://ak-minigrid.firebaseapp.com) with the following credentials;
+
+Email address: example@gmail.com
+Password: 1111111
+
+The physical circuit is not currently connected so the app is set to generate random values to simulate real behaviour.
+
+## Design and Implementation overview
+
 The dashboard has two main components;
 
 -   A Micro-grid diagram which is constantly updated with the current values of currents and voltages as reported by the grid.
@@ -14,7 +25,7 @@ Table and grid values are sent from the physical circuit by a GSM module which i
 
 The backend service runs in a Node.js [container](https://firebase.google.com/products/functions/ 'Firebase cloud functions').
 
-## Micro grids
+### Micro grids
 
 A micro grid refers to a group of interconnected loads and distributed energy resources within clearly defined boundaries that acts as a single controllable entity with respect to the grid.
 Micro grids are small scale grids and usually provide power for rural areas away from the national grid. Micro grids make use of distributed energy sources and these can be both conventional and renewable sources and these include wind, solar, hydro power among others. The energy source

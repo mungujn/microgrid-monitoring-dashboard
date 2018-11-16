@@ -160,6 +160,7 @@ class CircuitGrid extends Component {
                     this.state.device_states.relay_6
                 );
                 break;
+            default:
         }
 
         this.setState({

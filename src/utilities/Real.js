@@ -4,7 +4,7 @@
 import firebase from 'firebase';
 
 // Add firebase keys
-const config = require('./skey.json');
+const config = require('./keys.json');
 firebase.initializeApp(config);
 const db = firebase.database();
 
@@ -101,7 +101,6 @@ export function saveData(location, key, value) {
  * @param {*} key key identifier for the data to retreive
  */
 export function readData(location, key) {
-    'use strict';
     return db
         .ref(location)
         .child(key)

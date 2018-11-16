@@ -12,8 +12,6 @@ import {
     ListItemIcon,
     ListItemText
 } from 'material-ui';
-import Assessment from 'material-ui-icons/Assessment';
-import Assignment from 'material-ui-icons/Assignment';
 import DirectionsBus from 'material-ui-icons/DirectionsBus';
 import FolderOpen from 'material-ui-icons/DirectionsBus';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';

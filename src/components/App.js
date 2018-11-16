@@ -50,7 +50,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        let user = API.isLoggedIn().then(user => {
+        API.isLoggedIn().then(user => {
             if (user === null || user === undefined) {
                 // No user is signed in.
                 console.log('not signed in');

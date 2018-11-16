@@ -41,7 +41,7 @@ class TableComponent extends Component {
     displayEntries = received_entries => {
         let items = [];
         received_entries.map(entry => {
-            items.push(
+            return items.push(
                 <tr>
                     <td>{entry.line_1.voltage}</td>
                     <td>{entry.line_2.voltage}</td>

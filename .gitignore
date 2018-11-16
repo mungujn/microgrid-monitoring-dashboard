@@ -1,5 +1,6 @@
 microgrid/functions/skey.json
 functions/script.js
+src/utilities/keys.json
 
 # create-react-app added ignore files
 # dependencies

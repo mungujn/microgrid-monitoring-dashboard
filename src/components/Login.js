@@ -3,9 +3,13 @@
  * Login UI
  */
 import React, { Component } from 'react';
-import { Button, CardHeader, Paper, TextField } from 'material-ui';
-
-import * as API from '../utilities/API';
+import {
+    Button,
+    CardHeader,
+    Paper,
+    TextField,
+    CircularProgress
+} from 'material-ui';
 
 const styles = {
     root: {
@@ -33,7 +37,8 @@ const styles = {
     },
     login_button: {
         display: 'inline-block'
-    }
+    },
+    loader: {}
 };
 
 /**
@@ -44,7 +49,8 @@ class Login extends Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            loading: true
         };
         this.handleClickLogin = this.handleClickLogin.bind(this);
         this.handleInput = this.handleInput.bind(this);
@@ -70,6 +76,9 @@ class Login extends Component {
         event.preventDefault();
         let email = this.state.email;
         let password = this.state.password;
+        this.setState({
+            loading: false
+        });
 
         this.props.login(email, password);
     }
@@ -83,7 +92,7 @@ class Login extends Component {
                 <Paper elevation={5} style={styles.paper}>
                     <CardHeader
                         style={styles.header}
-                        title="Micro-grid Administration Login"
+                        title="Micro-grid Admin Login"
                     />
                     <form
                         onSubmit={this.handleClickLogin}
@@ -112,9 +121,27 @@ class Login extends Component {
                         />
                         <br />
                         <br />
+                        <div
+                            style={Object.assign(
+                                {
+                                    marginLeft: 'auto',
+                                    marginRight: 'auto',
+                                    width: '5em'
+                                },
+                                this.state.loading && styles.hide
+                            )}
+                        >
+                            <CircularProgress size={40} />
+                        </div>
+
                         <div style={styles.login_button_div}>
                             <Button
-                                style={styles.login_button}
+                                style={Object.assign(
+                                    {
+                                        display: 'inline-block'
+                                    },
+                                    !this.state.loading && styles.hide
+                                )}
                                 type="submit"
                                 raised
                                 color="primary"
