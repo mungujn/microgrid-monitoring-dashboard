@@ -5,6 +5,7 @@ yarn.lock
 firebase-debug.log
 .firebaserc
 firebase.json
+.firebase
 
 # create-react-app added ignore files
 # dependencies
