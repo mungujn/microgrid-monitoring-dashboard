@@ -7,7 +7,7 @@ import { AppBar, IconButton, Toolbar, Typography } from 'material-ui';
 import MenuIcon from 'material-ui-icons/Menu';
 import LogoutButton from './LogoutButton';
 
-const drawer_width = '13';
+// const drawer_width = '13';
 let style = {
     root: {},
     app_bar: {
@@ -15,7 +15,8 @@ let style = {
     },
     app_bar_shift: {
         position: 'absolute',
-        width: `calc(100% - ${drawer_width}em)`
+        width: '100%'
+        /*width: `calc(100% - ${drawer_width}em)`*/
     },
     menu_button: {
         marginLeft: '1em',

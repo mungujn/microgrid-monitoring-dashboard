@@ -3,3 +3,4 @@ node_js:
   - "stable"
 script:
   - npm install
+  # - npm test # TODO: set security env keys in travis

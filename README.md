@@ -1,5 +1,7 @@
 # Micro electrical grid monitoring dashboard
 
+[![Build Status](https://travis-ci.com/mungujn/microgrid-monitoring-dashboard.svg?branch=master)](https://travis-ci.com/mungujn/microgrid-monitoring-dashboard)
+
 A web application for remotely monitoring relatively micro electrical grids. Built using [ReactJs](https://reactjs.org/ 'React.js') and the [material-ui react library](https://material-ui.com/ 'Material UI').
 
 After launching the application, a user logs in with an email address and a password. Authentication is provided by [firebase](https://firebase.google.com/products/auth/ 'firebase auth'). Once authenticated they move on to a control dashboard.

@@ -54,6 +54,9 @@ const styles = {
         top: '0',
         left: '0'
         */
+    },
+    circuit_grid: {
+        overflow: 'auto'
     }
 };
 
@@ -214,7 +217,10 @@ class CircuitGrid extends Component {
             <div>
                 <Paper elevation={5} style={styles.paper}>
                     <div>
-                        <div style={styles.inner}>{this.getSVG()}</div>
+                    <div style={styles.circuit_grid}>
+                    <div style={styles.inner}>{this.getSVG()}</div>
+                    </div>
+                        
 
                         {this.getButtons()}
                     </div>

@@ -7,7 +7,7 @@ import { Grid } from 'material-ui';
 import CircuitGrid from './CircuitGrid';
 import TableComponent from './TableComponent';
 
-const style = {
+const styles = {
     content: {
         maxWidth: '100%',
         overflowX: 'hidden',
@@ -33,8 +33,8 @@ class Content extends Component {
             <div
                 style={Object.assign(
                     {},
-                    style.content,
-                    drawer_open && style.content_shift
+                    styles.content,
+                    drawer_open && styles.content_shift
                 )}
             >
                 <Grid
