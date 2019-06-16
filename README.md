@@ -48,4 +48,4 @@ This particular micro grid case study was for a hospital in Kanungu, a district 
 
 ![Web app screenshot](https://raw.githubusercontent.com/mungujn/microgrid-monitoring-dashboard/master/static/web-app.png 'Web app screenshot')
 
-Grid research, design, simulation and diagrams courtesy of Edward Kategaya and Albert Tumwebaze
+Grid research, design, simulation and diagrams courtesy of Edward Kategaya, Albert Tumwebaze and Clive Benedict Misagga
